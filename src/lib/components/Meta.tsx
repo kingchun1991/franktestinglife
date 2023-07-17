@@ -1,4 +1,4 @@
-const APP_NAME = 'nextjs-chakra-mdx';
+const APP_NAME = 'FrankTestingLife';
 
 const Meta = () => {
   return (

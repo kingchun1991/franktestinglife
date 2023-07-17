@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 const NextSitemapConfig = {
-  siteUrl: "https://nextjs-chakra-mdx.vercel.app/",
+  siteUrl: 'https://www.franktestinglife.com/',
   generateRobotsTxt: true,
 };
 
