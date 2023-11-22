@@ -1,0 +1,43 @@
+on:
+  workflow_dispatch:
+
+name: get-data
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: https://jsonhub.pages.dev
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Download companyInfo
+        run: |-
+          curl -s "${BASE_URL}/api/career/companyInfo" > data/companyInfo.json
+  
+      - name: Download Work Experience csv
+        run: |-
+          curl --location 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyU2pa7sRmEUbkOHxHEpfw3ez783S0khVqbxmiV-UYGKOx_MEAJyupU-2DbYHUWUh6RW4vBVmtcQ_t/pub?gid=0&single=true&output=csv&headers=0&range=A2%3AZZ' > data/workexp.csv
+
+      - name: Convert CSV to JSON
+        run: |
+          npm install -g csvtojson
+          csvtojson data/workexp.csv > data/workexp.json
+
+      - name: Commit and push if the data has changed
+        run: |-
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          timestamp=$(TZ='Asia/Hong_Kong' date)
+          git commit -m "Latest data: ${timestamp}" || exit 0
+          git push
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
