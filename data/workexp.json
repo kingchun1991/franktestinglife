@@ -1,10 +1,10 @@
 [
-{"CompanyKey":"HA","From":"2022-06-28","To":"","Company":"Hospital Authority (Secondment by IT People Ltd)","Tittle":"System Analyst"},
-{"CompanyKey":"HA","From":"2021-01-05","To":"2022-06-27","Company":"Hospital Authority","Tittle":"Analyst Programmer"},
-{"CompanyKey":"HKEAA","From":"2019-07-02","To":"2021-01-03","Company":"Hong Kong Examinations and Assessment Authority","Tittle":"Information Technology Officer"},
-{"CompanyKey":"NVIDIA","From":"2017-10-16","To":"2019-07-01","Company":"Nvidia","Tittle":"Contracted Analyst Programmer"},
-{"CompanyKey":"OOCL","From":"2017-04-01","To":"2017-10-15","Company":"OOCL","Tittle":"Technical Analyst"},
-{"CompanyKey":"OOCL","From":"2016-02-01","To":"2017-04-01","Company":"OOCL","Tittle":"Assistant Technical Analyst"},
-{"CompanyKey":"SINO","From":"2015-01-07","To":"2016-01-30","Company":"Sino Administration Services LImited","Tittle":"Programmer"},
-{"CompanyKey":"MPFA","From":"2014-05-30","To":"2015-01-05","Company":"Mandatory Provident Fund Schemes Authority","Tittle":"Contracted IT Helpdesk Support"}
+{"companyKey":"HA","from":"2022-06-28","to":"","company":"Hospital Authority (Secondment by IT People Ltd)","tittle":"System Analyst"},
+{"companyKey":"HA","from":"2021-01-05","to":"2022-06-27","company":"Hospital Authority","tittle":"Analyst Programmer"},
+{"companyKey":"HKEAA","from":"2019-07-02","to":"2021-01-03","company":"Hong Kong Examinations and Assessment Authority","tittle":"Information Technology Officer"},
+{"companyKey":"NVIDIA","from":"2017-10-16","to":"2019-07-01","company":"Nvidia","tittle":"Contracted Analyst Programmer"},
+{"companyKey":"OOCL","from":"2017-04-01","to":"2017-10-15","company":"OOCL","tittle":"Technical Analyst"},
+{"companyKey":"OOCL","from":"2016-02-01","to":"2017-04-01","company":"OOCL","tittle":"Assistant Technical Analyst"},
+{"companyKey":"SINO","from":"2015-01-07","to":"2016-01-30","company":"Sino Administration Services LImited","tittle":"Programmer"},
+{"companyKey":"MPFA","from":"2014-05-30","to":"2015-01-05","company":"Mandatory Provident Fund Schemes Authority","tittle":"Contracted IT Helpdesk Support"}
 ]
