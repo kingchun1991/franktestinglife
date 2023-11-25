@@ -24,3 +24,27 @@ export interface IPosts {
   image: string;
   category: string;
 }
+
+export interface ICompanyInfo {
+  companyKey: string;
+  companyName: string;
+  companyIcon: string;
+  companyJobLink: string;
+  tags: string[];
+}
+
+export interface IWorkexp {
+  companyKey: string;
+  from: string;
+  to: string;
+  companyName: string;
+  title: string;
+}
+
+export interface IWorkexpHeader {
+  companyKey: string;
+  from: string;
+  to: string;
+  companyName: string;
+  companyIcon: string;
+}

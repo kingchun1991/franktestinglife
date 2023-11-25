@@ -30,7 +30,13 @@ const Timeline = () => {
   });
 
   return (
-    <Stepper index={activeStep} orientation="vertical" height="400px" gap="0">
+    <Stepper
+      size="sm"
+      index={activeStep}
+      orientation="vertical"
+      height="400px"
+      gap="0"
+    >
       {steps.map((step, index) => (
         <Step key={index}>
           <StepIndicator>
