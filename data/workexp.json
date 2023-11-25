@@ -1,11 +1,11 @@
 [
-{"companyKey":"HA","from":"2023-11-09","to":"Current","companyName":"Hospital Authority","titte":"System Analyst"},
-{"companyKey":"HA","from":"2022-06-28","to":"2023-11-08","companyName":"Hospital Authority (Secondment by IT People Ltd)","titte":"System Analyst"},
-{"companyKey":"HA","from":"2021-01-05","to":"2022-06-27","companyName":"Hospital Authority","titte":"Analyst Programmer"},
-{"companyKey":"HKEAA","from":"2019-07-02","to":"2021-01-03","companyName":"Hong Kong Examinations and Assessment Authority","titte":"Information Technology Officer"},
-{"companyKey":"NVIDIA","from":"2017-10-16","to":"2019-07-01","companyName":"Nvidia","titte":"Contracted Analyst Programmer"},
-{"companyKey":"OOCL","from":"2017-04-01","to":"2017-10-15","companyName":"OOCL","titte":"Technical Analyst"},
-{"companyKey":"OOCL","from":"2016-02-01","to":"2017-04-01","companyName":"OOCL","titte":"Assistant Technical Analyst"},
-{"companyKey":"SINO","from":"2015-01-07","to":"2016-01-30","companyName":"Sino Administration Services LImited","titte":"Programmer"},
-{"companyKey":"MPFA","from":"2014-05-30","to":"2015-01-05","companyName":"Mandatory Provident Fund Schemes Authority","titte":"Contracted IT Helpdesk Support"}
+{"companyKey":"HA","from":"2023-11-09","to":"Current","companyName":"Hospital Authority","title":"System Analyst"},
+{"companyKey":"HA","from":"2022-06-28","to":"2023-11-08","companyName":"Hospital Authority (Secondment by IT People Ltd)","title":"System Analyst"},
+{"companyKey":"HA","from":"2021-01-05","to":"2022-06-27","companyName":"Hospital Authority","title":"Analyst Programmer"},
+{"companyKey":"HKEAA","from":"2019-07-02","to":"2021-01-03","companyName":"Hong Kong Examinations and Assessment Authority","title":"Information Technology Officer"},
+{"companyKey":"NVIDIA","from":"2017-10-16","to":"2019-07-01","companyName":"Nvidia","title":"Contracted Analyst Programmer"},
+{"companyKey":"OOCL","from":"2017-04-01","to":"2017-10-15","companyName":"OOCL","title":"Technical Analyst"},
+{"companyKey":"OOCL","from":"2016-02-01","to":"2017-04-01","companyName":"OOCL","title":"Assistant Technical Analyst"},
+{"companyKey":"SINO","from":"2015-01-07","to":"2016-01-30","companyName":"Sino Administration Services LImited","title":"Programmer"},
+{"companyKey":"MPFA","from":"2014-05-30","to":"2015-01-05","companyName":"Mandatory Provident Fund Schemes Authority","title":"Contracted IT Helpdesk Support"}
 ]
