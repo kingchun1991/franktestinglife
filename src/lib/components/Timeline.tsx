@@ -15,20 +15,16 @@ import {
 
 import type { IWorkexp } from '~/lib/types/custom-types';
 
-const steps = [
-  {
-    jobTitle: 'System Analyst',
-    description:
-      '3/F, GRAND BALLROOM,<br> SHERATON HONG KONG HOTEL & TOWERS,<br> 20 NATHAN ROAD,<br> KOWLOON TSIM SHA TSUI,HONG KONG<br><br>香港九龍尖沙咀彌敦道20號<br>香港喜来登酒店 3樓宴會大廳',
-  },
-  { jobTitle: 'Analyst programmer', description: '6:00 PM' },
-  { jobTitle: 'Ceremony & Banquet', description: '7:00 PM' },
-];
-
-const Timeline = ({ workexps }: { workexps: IWorkexp[] }) => {
+const Timeline = ({
+  workexps,
+  activeIndex,
+}: {
+  workexps: IWorkexp[];
+  activeIndex: number;
+}) => {
   const { activeStep } = useSteps({
-    index: 1,
-    count: steps.length,
+    index: activeIndex,
+    count: workexps.length,
   });
 
   return (

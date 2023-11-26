@@ -89,6 +89,9 @@ const About = () => {
           const workexpDataForItem = workexpData.filter(
             (we) => we.companyKey === item.companyKey
           );
+          // Conditionally set activeIndex
+          const activeIndex =
+            item.to !== 'Current' ? workexpDataForItem.length : 0;
 
           return (
             <AccordionItem key={item.companyKey}>
@@ -119,7 +122,10 @@ const About = () => {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Timeline workexps={workexpDataForItem} />
+                <Timeline
+                  workexps={workexpDataForItem}
+                  activeIndex={activeIndex}
+                />
               </AccordionPanel>
             </AccordionItem>
           );
