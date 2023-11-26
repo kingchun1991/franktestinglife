@@ -83,7 +83,7 @@ const About = () => {
       <Text fontSize="2xl" as="b">
         Working Experience
       </Text>
-      <Accordion>
+      <Accordion allowMultiple defaultIndex={[0]}>
         {finalData.map((item) => {
           // Filter workexpData by item.companyKey
           const workexpDataForItem = workexpData.filter(
