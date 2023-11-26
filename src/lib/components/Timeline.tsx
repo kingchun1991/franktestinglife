@@ -13,6 +13,8 @@ import {
   useSteps,
 } from '@chakra-ui/react';
 
+import type { IWorkexp } from '~/lib/types/custom-types';
+
 const steps = [
   {
     jobTitle: 'System Analyst',
@@ -23,7 +25,7 @@ const steps = [
   { jobTitle: 'Ceremony & Banquet', description: '7:00 PM' },
 ];
 
-const Timeline = () => {
+const Timeline = ({ workexps }: { workexps: IWorkexp[] }) => {
   const { activeStep } = useSteps({
     index: 1,
     count: steps.length,
@@ -34,10 +36,10 @@ const Timeline = () => {
       size="sm"
       index={activeStep}
       orientation="vertical"
-      height="400px"
+      // height="400px"
       gap="0"
     >
-      {steps.map((step, index) => (
+      {workexps.map((workexp, index) => (
         <Step key={index}>
           <StepIndicator>
             <StepStatus
@@ -48,11 +50,14 @@ const Timeline = () => {
           </StepIndicator>
 
           <Box flexShrink="0">
-            <StepTitle>{step.jobTitle}</StepTitle>
-            <StepDescription
+            <StepTitle>{workexp.title}</StepTitle>
+            {/* <StepDescription
               style={{ whiteSpace: 'pre-line' }}
-              dangerouslySetInnerHTML={{ __html: step.description }}
-            />
+              dangerouslySetInnerHTML={{ __html: workexp.description }}
+            /> */}
+            <StepDescription>
+              {workexp.from} - {workexp.to}
+            </StepDescription>
           </Box>
 
           <StepSeparator />

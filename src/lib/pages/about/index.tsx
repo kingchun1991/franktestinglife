@@ -80,36 +80,50 @@ const About = () => {
       mb={8}
       w="full"
     >
+      <Text fontSize="2xl" as="b">
+        Working Experience
+      </Text>
       <Accordion>
-        {finalData.map((item) => (
-          <AccordionItem key={item.companyKey}>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  <Flex mb={1}>
-                    <HStack>
-                      <Avatar
-                        size="sm"
-                        name={item.companyKey}
-                        src={item.companyIcon}
-                      />
-                      <Text fontSize="md">{item.companyName}</Text>
-                    </HStack>
-                  </Flex>
-                  <Flex mb={1}>
-                    <Text fontSize="md" as="b">
-                      {item.from} - {item.to}
-                    </Text>
-                  </Flex>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <Timeline />
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
+        {finalData.map((item) => {
+          // Filter workexpData by item.companyKey
+          const workexpDataForItem = workexpData.filter(
+            (we) => we.companyKey === item.companyKey
+          );
+
+          return (
+            <AccordionItem key={item.companyKey}>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex="1" textAlign="left">
+                    <Flex mb={1}>
+                      <HStack>
+                        <Avatar
+                          size="sm"
+                          name={item.companyKey}
+                          src={
+                            item.companyIcon
+                              ? item.companyIcon
+                              : 'default_icon_url'
+                          }
+                        />
+                        <Text fontSize="md">{item.companyName}</Text>
+                      </HStack>
+                    </Flex>
+                    <Flex mb={1}>
+                      <Text fontSize="md" as="b">
+                        {item.from}-{item.to}
+                      </Text>
+                    </Flex>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Timeline workexps={workexpDataForItem} />
+              </AccordionPanel>
+            </AccordionItem>
+          );
+        })}
       </Accordion>
     </Flex>
   );
