@@ -114,7 +114,7 @@ const About = () => {
                     </Flex>
                     <Flex mb={1}>
                       <Text fontSize="md" as="b">
-                        {item.from}-{item.to}
+                        {item.from} - {item.to}
                       </Text>
                     </Flex>
                   </Box>
