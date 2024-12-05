@@ -1,4 +1,6 @@
-import { Tooltip, Image } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
+
+import { Tooltip } from '@/components/ui/tooltip';
 
 type HelperImageProps = {
   label?: string;
@@ -9,8 +11,15 @@ const size = 5;
 
 const HelperImage = ({ label = '', src }: HelperImageProps) => {
   return (
-    <Tooltip hasArrow aria-label={label} label={label} placement="auto-end">
-      <Image src={src} alt={label} title={label} height={size} width={size} />
+    <Tooltip showArrow aria-label={label} content={label}>
+      <Image
+        src={src}
+        alt={label}
+        title={label}
+        height={size}
+        width={size}
+        objectFit="contain"
+      />
     </Tooltip>
   );
 };

@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from 'next';
 
-import Providers from '~/app/providers';
-import Layout from '~/lib/layout';
+import { Provider } from '@/components/ui/provider';
+import Layout from '@/lib/layout';
+import { siteConfig } from '@/site.config';
 
 type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'FrankTestingLife';
+const APP_NAME = siteConfig.title;
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: '%s | FrankTestingLife' },
-  description: 'Next.js + chakra-ui + TypeScript template',
+  title: { default: APP_NAME, template: siteConfig.titleTemplate },
+  description: siteConfig.description,
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -22,12 +23,12 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    url: 'https://www.franktestinglife.com',
-    title: 'FrankTestingLife',
-    description: 'Next.js + chakra-ui + TypeScript template',
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: {
-      url: 'https://og-image.sznm.dev/**FrankTestingLife**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fsznm.dev%2Favataaars.svg&widths=250',
-      alt: 'FrankTestingLife og-image',
+      url: `https://og-image.sznm.dev/**FrankTestingLife**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fsznm.dev%2Favataaars.svg&widths=250`,
+      alt: `${siteConfig.title} og-image`,
     },
   },
   twitter: {
@@ -44,11 +45,11 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en">
+    <html lang={siteConfig.language} suppressHydrationWarning>
       <body>
-        <Providers>
+        <Provider>
           <Layout>{children}</Layout>
-        </Providers>
+        </Provider>
       </body>
     </html>
   );

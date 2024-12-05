@@ -1,65 +1,30 @@
 /* eslint-disable react/no-array-index-key */
-import {
-  Box,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
-} from '@chakra-ui/react';
 
-import type { IWorkexp } from '~/lib/types/custom-types';
+import { LuCheck } from 'react-icons/lu';
 
-const Timeline = ({
-  workexps,
-  activeIndex,
-}: {
-  workexps: IWorkexp[];
-  activeIndex: number;
-}) => {
-  const { activeStep } = useSteps({
-    index: activeIndex,
-    count: workexps.length,
-  });
+import { StepsItem, StepsList, StepsRoot } from '@/components/ui/steps';
+import type { IWorkexp } from '@/lib/types/custom-types';
 
+const Timeline = ({ workexps }: { workexps: IWorkexp[] }) => {
   return (
-    <Stepper
-      size="sm"
-      index={activeStep}
+    <StepsRoot
       orientation="vertical"
-      // height="400px"
-      gap="0"
+      size="sm"
+      defaultValue={1}
+      count={workexps.length}
     >
-      {workexps.map((workexp, index) => (
-        <Step key={index}>
-          <StepIndicator>
-            <StepStatus
-              complete={<StepIcon />}
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
-
-          <Box flexShrink="0">
-            <StepTitle>{workexp.title}</StepTitle>
-            {/* <StepDescription
-              style={{ whiteSpace: 'pre-line' }}
-              dangerouslySetInnerHTML={{ __html: workexp.description }}
-            /> */}
-            <StepDescription>
-              {workexp.from} - {workexp.to}
-            </StepDescription>
-          </Box>
-
-          <StepSeparator />
-        </Step>
-      ))}
-    </Stepper>
+      <StepsList>
+        {workexps.map((workexp, index) => (
+          <StepsItem
+            key={index}
+            index={index}
+            icon={<LuCheck />}
+            title={workexp.title}
+            description={`${workexp.from} - ${workexp.to}`}
+          />
+        ))}
+      </StepsList>
+    </StepsRoot>
   );
 };
 
