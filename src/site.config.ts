@@ -4,7 +4,7 @@ export const siteConfig: SitesConfig = {
   description: 'Next.js + chakra-ui + TypeScript + MDX templat',
   language: 'en',
   url: 'https://www.franktestinglife.com',
-  repoUrl: 'https://github.com/kingchun1991/franktestinglife',
+  repoUrl: 'https://github.com/kingchun1991',
   repoBranch: 'main',
   donationUrl: 'https://opencollective.com/chakra-ui',
   navigation: [

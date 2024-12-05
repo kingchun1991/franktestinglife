@@ -31,8 +31,6 @@ import {
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
-import SearchModal from './SearchModal';
-
 const DesktopSubNav = ({ title, url }: NavItem) => {
   return (
     <Link
@@ -239,7 +237,6 @@ const Header = () => {
           direction="row"
           gap={3}
         >
-          <SearchModal />
           <ColorModeButton />
           <IconButton
             as={Link}
