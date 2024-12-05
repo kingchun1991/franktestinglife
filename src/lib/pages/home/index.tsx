@@ -2,7 +2,7 @@
 
 import { Flex } from '@chakra-ui/react';
 
-import SomeText from '~/lib/components/samples/SomeText';
+import SomeText from '@/lib/components/samples/SomeText';
 
 const Home = () => {
   return (

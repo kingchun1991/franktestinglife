@@ -1,15 +1,21 @@
-import { Flex, useColorMode } from '@chakra-ui/react';
+'use client';
+
+import { Box, Flex } from '@chakra-ui/react';
 
 import HelperImage from './HelperImage';
 
 const SomeImage = () => {
-  const { colorMode } = useColorMode();
-
   return (
-    <Flex gap={2} justifyContent="center" alignItems="center">
-      <HelperImage src={`/nextjs-icon-${colorMode}.svg`} label="NextJS" />
+    <Flex gap={2} justifyContent="left" alignItems="left" p="2">
+      <Box display={{ base: 'none', _dark: 'block' }}>
+        <HelperImage src="/nextjs-icon-dark.svg" label="NextJS" />
+      </Box>
+      <Box display={{ base: 'block', _dark: 'none' }}>
+        <HelperImage src="/nextjs-icon-light.svg" label="NextJS" />
+      </Box>
       <HelperImage src="/chakra-ui-logomark-colored.svg" label="Chakra UI" />
       <HelperImage src="/ts-logo-512.svg" label="TypeScript" />
+      <HelperImage src="/mdx-icon.svg" label="MDX" />
     </Flex>
   );
 };

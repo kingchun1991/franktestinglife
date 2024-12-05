@@ -1,48 +1,46 @@
+/* eslint-disable react/no-unused-prop-types */
 import {
   Box,
   Flex,
   Text,
   IconButton,
   Stack,
-  Collapse,
+  Collapsible,
   Icon,
   Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Spacer,
 } from '@chakra-ui/react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import NextLink from 'next/link';
+import {
+  LuGithub,
+  LuMenu,
+  LuX,
+  LuChevronDown,
+  LuChevronRight,
+} from 'react-icons/lu';
 
-// import Link from "next/link";
-import ThemeToggle from './ThemeToggle';
+import { ColorModeButton } from '@/components/ui/color-mode';
+import {
+  HoverCardArrow,
+  HoverCardContent,
+  HoverCardRoot,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import type { NavItem } from '@/site.config';
+import { siteConfig } from '@/site.config';
 
-interface NavItem {
-  label: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  children?: Array<NavItem>;
-  href?: string;
-}
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'About',
-    href: '/about',
-  },
-];
-
-const DesktopSubNav = ({ label, href }: NavItem) => {
+const DesktopSubNav = ({ title, url }: NavItem) => {
   return (
     <Link
-      href={href}
+      as={NextLink}
+      href={url}
       role="group"
       display="block"
       p={2}
       rounded="md"
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+      _hover={{ bg: { base: 'pink.50', _dark: 'gray.900' } }}
     >
       <Stack direction="row" align="center">
         <Box>
@@ -51,7 +49,7 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
             _groupHover={{ color: 'pink.400' }}
             fontWeight={500}
           >
-            {label}
+            {title}
           </Text>
         </Box>
         <Flex
@@ -63,7 +61,9 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
           align="center"
           flex={1}
         >
-          <Icon color="pink.400" w={5} h={5} as={FiChevronRight} />
+          <Icon color="pink.400" w={5} h={5}>
+            <LuChevronRight />
+          </Icon>
         </Flex>
       </Stack>
     </Link>
@@ -71,175 +71,212 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
 };
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-
   return (
-    <Stack direction="row" spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger="hover" placement="bottom-start">
-            <PopoverTrigger>
+    <Stack direction="row" gap={4}>
+      {siteConfig.navigation.map((navItem) => (
+        <Box key={navItem.title}>
+          <HoverCardRoot>
+            <HoverCardTrigger asChild>
               <Link
+                as={NextLink}
                 p={2}
-                href={navItem.href ?? '#'}
+                href={navItem.url ?? '#'}
                 fontSize="sm"
                 fontWeight={500}
-                color={linkColor}
+                color="gray.600"
+                _dark={{ color: 'gray.200' }}
                 _hover={{
                   textDecoration: 'none',
-                  color: linkHoverColor,
+                  color: { base: 'gray.800', _dark: 'white' },
                 }}
               >
-                {navItem.label}
+                {navItem.title}
               </Link>
-            </PopoverTrigger>
+            </HoverCardTrigger>
 
             {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow="xl"
-                bg={popoverContentBgColor}
-                p={4}
-                rounded="xl"
-                minW="sm"
-              >
+              <HoverCardContent>
+                <HoverCardArrow />
                 <Stack>
                   {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
+                    <DesktopSubNav key={child.title} {...child} />
                   ))}
                 </Stack>
-              </PopoverContent>
+              </HoverCardContent>
             )}
-          </Popover>
+          </HoverCardRoot>
         </Box>
       ))}
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure();
+const MobileNavItem = ({ title, url, children }: NavItem) => {
+  const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        href={href ?? '#'}
-        justify="space-between"
-        align="center"
-        _hover={{
-          textDecoration: 'none',
-        }}
-      >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
+    <Stack gap={4} onClick={children && onToggle}>
+      <Link href={url ?? '#'}>
+        <Flex
+          py={2}
+          as={Link}
+          // href={href ?? '#'}
+          justify="space-between"
+          align="center"
+          _hover={{
+            textDecoration: 'none',
+          }}
         >
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={FiChevronDown}
-            transition="all .25s ease-in-out"
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          />
-        )}
-      </Flex>
+          <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
+            {title}
+          </Text>
+          {children && (
+            <Icon
+              transition="all .25s ease-in-out"
+              transform={open ? 'rotate(180deg)' : ''}
+              w={6}
+              h={6}
+            >
+              <LuChevronDown />
+            </Icon>
+          )}
+        </Flex>
+      </Link>
 
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle="solid"
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align="start"
-        >
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
+      <Collapsible.Root open={open} style={{ marginTop: '0!important' }}>
+        <Collapsible.Content>
+          <Stack
+            mt={2}
+            pl={4}
+            borderLeft={1}
+            borderStyle="solid"
+            borderColor="gray.200"
+            _dark={{ borderColor: 'gray.700' }}
+            align="start"
+          >
+            {children &&
+              children.map((child) => (
+                <Link as={NextLink} key={child.title} py={2} href={child.url}>
+                  {child.title}
+                </Link>
+              ))}
+          </Stack>
+        </Collapsible.Content>
+      </Collapsible.Root>
     </Stack>
   );
 };
 
 const MobileNav = () => {
   return (
-    <Stack
-      bg={useColorModeValue('white', 'gray.800')}
-      p={4}
-      display={{ md: 'none' }}
-    >
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+    <Stack bg="white" _dark={{ bg: 'gray.800' }} p={4} display={{ md: 'none' }}>
+      {siteConfig.navigation.map((navItem) => (
+        <MobileNavItem key={navItem.title} {...navItem} />
       ))}
     </Stack>
   );
 };
 
 const Header = () => {
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
         minH="60px"
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
         borderStyle="solid"
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
         align="center"
       >
         <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
+          flex={{ base: 1 }}
+          justify={{ base: 'left', md: 'start' }}
+          align="center"
         >
-          <IconButton
-            onClick={onToggle}
-            icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
-            variant="ghost"
-            aria-label="Toggle Navigation"
-          />
+          <Link as={NextLink} href="/">
+            <Text
+              textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
+              fontFamily="heading"
+              color="gray.800"
+              _dark={{ color: 'white' }}
+            >
+              <Flex align="center">
+                <Box>
+                  <Text
+                    fontSize={25}
+                    color="teal"
+                    bg="transparent"
+                    w="100%"
+                    h="100%"
+                    textAlign="center"
+                    justifyContent="center"
+                    alignItems="center"
+                    p="1"
+                    as="b"
+                  >
+                    F.
+                  </Text>
+                </Box>
+                <Box display={{ base: 'none', md: 'flex' }}>
+                  {siteConfig.title}
+                </Box>
+              </Flex>
+            </Text>
+          </Link>
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily="heading"
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            <Link href="/">Home</Link>
-          </Text>
 
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
+        <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <DesktopNav />
         </Flex>
+
+        <Spacer />
 
         <Stack
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           direction="row"
-          spacing={6}
+          gap={3}
         >
-          <ThemeToggle />
+          <ColorModeButton />
+          <IconButton
+            as={Link}
+            aria-label="GitHub Repository"
+            bg="transparent"
+            color="black"
+            _dark={{ bg: 'black', color: 'white' }}
+          >
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={siteConfig.repoUrl}
+            >
+              <LuGithub />
+            </Link>
+          </IconButton>
+          <Spacer />
+          <Flex
+            flex={{ base: 1, md: 'auto' }}
+            ml={{ base: -2 }}
+            display={{ base: 'flex', md: 'none' }}
+          >
+            <IconButton
+              aria-label="Toggle Navigation"
+              onClick={onToggle}
+              bg="transparent"
+              color="black"
+              _dark={{ bg: 'black', color: 'white' }}
+            >
+              {open ? <LuX /> : <LuMenu />}
+            </IconButton>
+          </Flex>
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
+      <Collapsible.Root open={open}>
+        <Collapsible.Content>
+          <MobileNav />
+        </Collapsible.Content>
+      </Collapsible.Root>
     </Box>
   );
 };

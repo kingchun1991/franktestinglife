@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/destructuring-assignment */
 
@@ -10,18 +11,25 @@ import {
   Heading,
   Link,
   Text,
-  Divider,
-  useColorMode,
+  Separator,
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Alert,
+  List,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
+
+import { Alert } from '@/components/ui/alert';
+
+import ProductSimple from './MDXComponents/Card';
+import { CodeBlock } from './MDXComponents/CodeBlock';
+import { TableOfContents } from './MDXComponents/TableOfContents';
+
+const ProductCard = (props: any) => {
+  const { imgsrc, title, price, url } = props;
+  return (
+    <ProductSimple imgsrc={imgsrc} title={title} price={price} url={url} />
+  );
+};
 
 const CustomImage = (props: any) => {
   const { width, height, src, alt } = props;
@@ -30,11 +38,6 @@ const CustomImage = (props: any) => {
 
 const CustomLink = (props: any) => {
   const { href } = props;
-  const { colorMode } = useColorMode();
-  const color = {
-    light: 'blue.500',
-    dark: 'blue.500',
-  };
 
   // const href = props.href;
   const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
@@ -42,17 +45,23 @@ const CustomLink = (props: any) => {
   if (isInternalLink) {
     return (
       <NextLink href={href} passHref>
-        <Link color={color[colorMode]} {...props} />
+        <Link color="blue.500" _dark={{ color: 'blue.500' }} {...props} />
       </NextLink>
     );
   }
 
-  return <Link color={color[colorMode]} isExternal {...props} />;
+  return (
+    <Link
+      color="blue.500"
+      _dark={{ color: 'blue.500' }}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  );
 };
 
 const Quote = (props: any) => {
-  useColorMode();
-
   return (
     <Box
       as="blockquote"
@@ -68,125 +77,87 @@ const Quote = (props: any) => {
     />
   );
 };
-
-const CustomCallout = (props: any) => {
-  return (
-    <Alert status="success" {...props}>
-      <Box as="span" mr="2">
-        {props.icon}
-      </Box>
-      {props.children}
-    </Alert>
-  );
+// Define a type for the props
+type CustomHeadingProps = {
+  as: React.ElementType;
+  id?: string; // Make id optional since it's not always required
+  [key: string]: any; // This allows for any other props
 };
 
-const DocsHeading = (props: any) => (
-  <Heading
-    css={{
-      scrollMarginTop: '100px',
-      scrollSnapMargin: '100px', // Safari
-      '&[id]': {
-        pointerEvents: 'none',
-      },
-      '&[id]:before': {
-        display: 'block',
-        height: ' 6rem',
-        marginTop: '-6rem',
-        visibility: 'hidden',
-        content: `""`,
-      },
-      '&[id]:hover a': { opacity: 1 },
-    }}
-    {...props}
-    mb="1em"
-    mt="2em"
-  >
-    <Box pointerEvents="auto">
-      {props.children}
-      {props.id && (
-        <Box
-          aria-label="anchor"
-          as="a"
-          color="blue.500"
-          fontWeight="normal"
-          outline="none"
-          _focus={{
-            opacity: 1,
-            boxShadow: 'outline',
-          }}
-          opacity="0"
-          ml="0.375rem"
-          href={`#${props.id}`}
-        >
-          #
-        </Box>
-      )}
-    </Box>
-  </Heading>
-);
+const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <NextLink href={`#${id}`}>
+          <Heading
+            as={as}
+            display="inline"
+            id={id}
+            lineHeight="1em"
+            {...props}
+            _hover={{
+              _before: {
+                content: '"#"',
+                position: 'relative',
+                marginLeft: '-1.2ch',
+                paddingRight: '0.2ch',
+              },
+            }}
+          />
+        </NextLink>
+      </Link>
+    );
+  }
+  return <Heading as={as} {...props} />;
+};
 
 const Hr = () => {
-  const { colorMode } = useColorMode();
-  const borderColor = {
-    light: 'gray.200',
-    dark: 'gray.600',
-  };
-
-  return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />;
-};
-
-const PreformattedCode = (props: any) => {
   return (
-    <pre style={{ overflowX: 'scroll' }}>
-      <Code {...props} />
-    </pre>
+    <Separator
+      borderColor="gray.200"
+      _dark={{ borderColor: 'gray.600' }}
+      my={4}
+      w="100%"
+    />
   );
 };
 
-const MDXTable = (props: any) => <Table {...props} />;
-const TableHead = (props: any) => <Thead {...props} />;
-const TableRow = (props: any) => <Tr {...props} />;
-const TableData = (props: any) => <Td {...props} />;
-const TableHeader = (props: any) => <Th {...props} />;
-const TableBody = (props: any) => <Tbody {...props} />;
+const MDXTable = (props: any) => <Table.Root {...props} />;
+const TableHead = (props: any) => <Table.Header {...props} />;
+const TableRow = (props: any) => <Table.Row {...props} />;
+const TableData = (props: any) => <Table.Cell {...props} />;
+const TableHeader = (props: any) => <Table.Header {...props} />;
+const TableBody = (props: any) => <Table.Body {...props} />;
 
 const MDXComponents = {
-  h1: (props: any) => <Heading as="h1" size="xl" my={4} {...props} />,
-  h2: (props: any) => (
-    <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />
-  ),
-  h3: (props: any) => (
-    <DocsHeading as="h3" size="md" fontWeight="bold" {...props} />
-  ),
-  h4: (props: any) => (
-    <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />
-  ),
-  h5: (props: any) => (
-    <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />
-  ),
-  h6: (props: any) => (
-    <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />
-  ),
-  inlineCode: (props: any) => (
-    <Code colorScheme="yellow" fontSize="0.84em" {...props} />
-  ),
+  h1: (props: any) => <CustomHeading as="h1" {...props} />,
+  h2: (props: any) => <CustomHeading as="h2" {...props} />,
+  h3: (props: any) => <CustomHeading as="h3" {...props} />,
+  h4: (props: any) => <CustomHeading as="h4" {...props} />,
+  h5: (props: any) => <CustomHeading as="h5" {...props} />,
+  h6: (props: any) => <CustomHeading as="h6" {...props} />,
+  inlineCode: (props: any) => <Code {...props} />,
   br: (props: any) => <Box height="24px" {...props} />,
   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
-  ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props: any) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
+  ul: (props: any) => <List.Root as="ul" pt={2} pl={4} ml={2} {...props} />,
+  ol: (props: any) => <List.Root as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props: any) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
   image: CustomImage,
   hr: Hr,
   a: CustomLink,
-  pre: PreformattedCode,
+  pre: (props: any) => {
+    return <CodeBlock {...props} />;
+  },
   table: MDXTable,
   th: TableHead,
   tr: TableRow,
   td: TableData,
   thead: TableHeader,
   tbody: TableBody,
-  CustomCallout,
+  Alert,
+  ProductCard: (props: any) => ProductCard(props),
+  TableOfContents,
 };
 
 export { CustomLink };

@@ -1,26 +1,21 @@
 'use client';
 
-import {
-  Flex,
-  HStack,
-  Avatar,
-  Text,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from '@chakra-ui/react';
+import { Flex, HStack, Avatar, Text, Box } from '@chakra-ui/react';
 
-import companyInfo from '~/../data/companyInfo.json';
-import workexp from '~/../data/workexp.json';
-import Timeline from '~/lib/components/Timeline';
+import companyInfo from '../../../../content/companyInfo.json';
+import workexp from '../../../../content/workexp.json';
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+} from '@/components/ui/accordion';
+import Timeline from '@/lib/components/Timeline';
 import type {
   ICompanyInfo,
   IWorkexp,
   IWorkexpHeader,
-} from '~/lib/types/custom-types';
+} from '@/lib/types/custom-types';
 
 function joinData(
   workexp1: IWorkexp[],
@@ -83,32 +78,30 @@ const About = () => {
       <Text fontSize="2xl" as="b">
         Working Experience
       </Text>
-      <Accordion allowMultiple defaultIndex={[0]}>
+      <AccordionRoot multiple defaultValue={['HA']}>
         {finalData.map((item) => {
           // Filter workexpData by item.companyKey
           const workexpDataForItem = workexpData.filter(
             (we) => we.companyKey === item.companyKey
           );
-          // Conditionally set activeIndex
-          const activeIndex =
-            item.to !== 'Current' ? workexpDataForItem.length : 0;
 
           return (
-            <AccordionItem key={item.companyKey}>
+            <AccordionItem key={item.companyKey} value={item.companyKey}>
               <h2>
-                <AccordionButton>
+                <AccordionItemTrigger>
                   <Box as="span" flex="1" textAlign="left">
                     <Flex mb={1}>
                       <HStack>
-                        <Avatar
-                          size="sm"
-                          name={item.companyKey}
-                          src={
-                            item.companyIcon
-                              ? item.companyIcon
-                              : 'default_icon_url'
-                          }
-                        />
+                        <Avatar.Root size="sm">
+                          <Avatar.Image
+                            src={
+                              item.companyIcon
+                                ? item.companyIcon
+                                : 'default_icon_url'
+                            }
+                          />
+                          <Avatar.Fallback />
+                        </Avatar.Root>
                         <Text fontSize="md">{item.companyName}</Text>
                       </HStack>
                     </Flex>
@@ -118,19 +111,15 @@ const About = () => {
                       </Text>
                     </Flex>
                   </Box>
-                  <AccordionIcon />
-                </AccordionButton>
+                </AccordionItemTrigger>
               </h2>
-              <AccordionPanel pb={4}>
-                <Timeline
-                  workexps={workexpDataForItem}
-                  activeIndex={activeIndex}
-                />
-              </AccordionPanel>
+              <AccordionItemContent pb={4}>
+                <Timeline workexps={workexpDataForItem} />
+              </AccordionItemContent>
             </AccordionItem>
           );
         })}
-      </Accordion>
+      </AccordionRoot>
     </Flex>
   );
 };
