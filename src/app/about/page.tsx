@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import About from '@/lib/pages/about';
+import AboutLayout from '@/lib/components/about';
+import type { IPosts } from '@/lib/types/custom-types';
+import { getFileBySlug } from '@/lib/utils/mdx';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -10,10 +14,24 @@ export const metadata: Metadata = {
     title: 'About | FrankTestingLife',
     description: 'About Frank',
     images: {
-      url: 'https://og-image.sznm.dev/About.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-white-logo.svg',
-      alt: 'FrankTestingLife og-image',
+      url: 'https://www.franktestinglife.com/api/og/cover?heading=About%20|%20nextjs-chakra-starter-blog&template=plain&center=true',
+      alt: 'About | FrankTestingLife og-image',
     },
   },
 };
 
-export default About;
+async function getAbout() {
+  return getFileBySlug('about', '_index');
+}
+
+export default async function index() {
+  const {
+    metaInformation,
+    mdxSource,
+  }: {
+    metaInformation: IPosts;
+    mdxSource: MDXRemoteSerializeResult;
+  } = await getAbout();
+
+  return <AboutLayout post={metaInformation} mdxSource={mdxSource} />;
+}

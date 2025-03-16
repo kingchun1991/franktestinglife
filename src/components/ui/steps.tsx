@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import { Box, Steps as ChakraSteps } from '@chakra-ui/react';
 import * as React from 'react';
 import { LuCheck } from 'react-icons/lu';

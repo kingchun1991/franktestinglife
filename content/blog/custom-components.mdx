@@ -16,10 +16,22 @@ draft: false
 <TableOfContents>
 
 - [Table Of Contents](#table-of-contents)
+- [Markdown Table](#markdown-table)
 - [Callout with icon](#callout-with-icon)
 - [Card](#card)
+- [Mermaid Diagram](#mermaid-diagram)
+- [github callout](#github-callout)
+- [Steps](#steps)
+- [Timeline Example](#timeline-example)
 
 </TableOfContents>
+
+# Markdown Table
+
+| Name  | Age |
+| ----- | --- |
+| Alice | 20  |
+| Bob   | 21  |
 
 # Callout with icon
 
@@ -50,6 +62,21 @@ graph LR
     B --> E[網上簽賬]
 ```
 
+```mermaid
+graph LR
+    A[消費] --> B[選擇合適信用卡]
+    B --> C[使用現金回贈網站]
+    C --> D[購買商品/服務]
+    D --> E[獲得雙重回贈]
+    E --> F[節省金錢]
+    style A fill:#f9d5e5,stroke:#333,stroke-width:2px
+    style B fill:#eeac99,stroke:#333,stroke-width:2px
+    style C fill:#e06377,stroke:#333,stroke-width:2px
+    style D fill:#c83349,stroke:#333,stroke-width:2px
+    style E fill:#5b9aa0,stroke:#333,stroke-width:2px
+    style F fill:#d6eadf,stroke:#333,stroke-width:2px
+```
+
 # github callout
 
 > [!IMPORTANT]
@@ -63,3 +90,18 @@ graph LR
 
 > [!TIP]
 > Alternatively to `UNOPTIMIZED=1`, to continue using `next/image`, you can use an alternative image optimization provider such as Imgix, Cloudinary or Akamai. See [image optimization documentation](https://nextjs.org/docs/app/building-your-application/deploying/static-exports#image-optimization) for more details.
+
+# Timeline Example
+
+<Timeline>
+  <TimelineItem
+    title="Phase 1"
+    subtitle="2024-01-01"
+    avatar="https://gravatar.com/avatar/fdfbdfa4600c9305f2c9bfa7b591b78d?s=400&d=robohash&r=x"
+  >
+    Description for phase 1.
+  </TimelineItem>
+  <TimelineItem title="Phase 2" subtitle="2024-02-01">
+    Description for phase 2.
+  </TimelineItem>
+</Timeline>

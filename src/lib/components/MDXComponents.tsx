@@ -19,10 +19,11 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 
 import { Alert } from '@/components/ui/alert';
-
 import ProductSimple from './MDXComponents/Card';
 import { CodeBlock } from './MDXComponents/CodeBlock';
 import { TableOfContents } from './MDXComponents/TableOfContents';
+import { Mermaid } from './MDXComponents/Mermaid';
+import { Timeline, TimelineItem } from './MDXComponents/Timeline'; // Updated import for timeline components
 
 const ProductCard = (props: any) => {
   const { imgsrc, title, price, url } = props;
@@ -147,6 +148,16 @@ const MDXComponents = {
   hr: Hr,
   a: CustomLink,
   pre: (props: any) => {
+    const { children } = props;
+    // Check if this is a mermaid code block
+    if (
+      children &&
+      children.props &&
+      children.props.className &&
+      children.props.className.includes('language-mermaid')
+    ) {
+      return <Mermaid code={children.props.children.trim()} />;
+    }
     return <CodeBlock {...props} />;
   },
   table: MDXTable,
@@ -158,6 +169,8 @@ const MDXComponents = {
   Alert,
   ProductCard: (props: any) => ProductCard(props),
   TableOfContents,
+  Timeline,
+  TimelineItem,
 };
 
 export { CustomLink };
