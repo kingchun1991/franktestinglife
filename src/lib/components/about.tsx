@@ -46,7 +46,10 @@ export default function AboutLayout({
           px={2}
         >
           <Flex align="center" justifyContent="center">
-            <Avatar.Root size="2xl">
+            <Avatar.Root
+              size="2xl"
+              css={{ bg: '#87CEEB', borderRadius: '50%' }}
+            >
               <Avatar.Image src={post.image} />
               <Avatar.Fallback>{post.author}</Avatar.Fallback>
             </Avatar.Root>
