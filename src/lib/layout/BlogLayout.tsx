@@ -15,14 +15,15 @@ import {
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { LuFolder, LuClock } from 'react-icons/lu';
+import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
+import { useEffect, useState } from 'react';
 
 import { Avatar } from '@/components/ui/avatar';
-import { Tag } from '@/components/ui/tag';
 import MDXComponents from '@/lib/components/MDXComponents';
 import Share from '@/lib/components/Share';
 import Tags from '@/lib/components/Tags';
+import Categories from '@/lib/components/Categories';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 
@@ -31,10 +32,18 @@ import { giscusConfig } from '@/site.config';
 export default function BlogLayout({
   mdxSource,
   post,
+  content,
 }: {
   mdxSource: MDXRemoteSerializeResult;
   post: IPosts;
+  content: string;
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -97,16 +106,7 @@ export default function BlogLayout({
               _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
-              <Icon>
-                <LuFolder />
-              </Icon>
-              <Box ml={1}>
-                {post.categories.map((category) => (
-                  <Tag key={category} colorPalette="teal" variant="solid">
-                    {category}
-                  </Tag>
-                ))}
-              </Box>
+              <Categories categories={post.categories ?? []} />
             </Flex>
             <Flex
               align="flex-start"
@@ -135,7 +135,7 @@ export default function BlogLayout({
               alignItems="center"
             >
               <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-                {readingDuration(String(mdxSource.frontmatter.content), {
+                {readingDuration(content, {
                   wordsPerMinute: 200,
                   emoji: false,
                 }) ?? ''}
@@ -143,7 +143,14 @@ export default function BlogLayout({
             </Flex>
           </HStack>
         </Flex>
-        <MDXRemote {...mdxSource} components={MDXComponents} />
+        {mounted && (
+          <MDXRemote {...mdxSource} components={MDXComponents as any} />
+        )}
+        {!mounted && (
+          <Box p={4} color="gray.500">
+            Loading content...
+          </Box>
+        )}
 
         <Box color="gray.700" _dark={{ color: 'gray.400' }}>
           <Tags tags={post.tags ?? []} />
